@@ -11,6 +11,7 @@ package at.tugraz.ist.ase.cdrmodel.test.model;
 import at.tugraz.ist.ase.cdrmodel.CDRModel;
 import at.tugraz.ist.ase.cdrmodel.IChocoModel;
 import at.tugraz.ist.ase.cdrmodel.test.ITestModel;
+import at.tugraz.ist.ase.cdrmodel.test.csp.CSPModels;
 import at.tugraz.ist.ase.common.LoggerUtils;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,6 @@ import org.chocosolver.solver.Model;
 import org.chocosolver.solver.constraints.Constraint;
 
 import java.util.*;
-
-import static at.tugraz.ist.ase.cdrmodel.test.csp.CSPModels.createModel6;
 
 @Slf4j
 public class TestModel6 extends CDRModel implements IChocoModel, ITestModel {
@@ -39,7 +38,7 @@ public class TestModel6 extends CDRModel implements IChocoModel, ITestModel {
         log.debug("{}Initializing model {} >>>", LoggerUtils.tab, getName());
         LoggerUtils.indent();
 
-        model = createModel6();
+        model = CSPModels.createModel6();
 
         // sets possibly faulty constraints to super class
         List<String> C = new ArrayList<>();
