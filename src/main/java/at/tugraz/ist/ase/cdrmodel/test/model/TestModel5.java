@@ -11,8 +11,10 @@ package at.tugraz.ist.ase.cdrmodel.test.model;
 import at.tugraz.ist.ase.cdrmodel.CDRModel;
 import at.tugraz.ist.ase.cdrmodel.IChocoModel;
 import at.tugraz.ist.ase.cdrmodel.test.ITestModel;
+import at.tugraz.ist.ase.common.LoggerUtils;
 import com.google.common.collect.Iterators;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.chocosolver.solver.Model;
 import org.chocosolver.solver.constraints.Constraint;
 
@@ -20,7 +22,7 @@ import java.util.*;
 
 import static at.tugraz.ist.ase.cdrmodel.test.csp.CSPModels.createModel5;
 
-
+@Slf4j
 public class TestModel5 extends CDRModel implements IChocoModel, ITestModel {
     @Getter
     private Model model;
@@ -33,7 +35,10 @@ public class TestModel5 extends CDRModel implements IChocoModel, ITestModel {
     }
 
     @Override
-    public void initialize() {
+    public void initialize() throws Exception {
+        log.debug("{}Initializing model {} >>>", LoggerUtils.tab, getName());
+        LoggerUtils.indent();
+
         model = createModel5();
 
         // sets possibly faulty constraints to super class
@@ -45,9 +50,12 @@ public class TestModel5 extends CDRModel implements IChocoModel, ITestModel {
         this.setPossiblyFaultyConstraints(C);
 
         identifyExpectedResults();
+
+        LoggerUtils.outdent();
+        log.debug("{}<<< Model {} initialized", LoggerUtils.tab, getName());
     }
 
-    public void identifyExpectedResults() {
+    private void identifyExpectedResults() {
         Set<String> C = this.getPossiblyFaultyConstraints();
 
         // Expected results
@@ -68,6 +76,8 @@ public class TestModel5 extends CDRModel implements IChocoModel, ITestModel {
 
         allConflicts = new ArrayList<>();
         allConflicts.add(cs1);
+
+        log.trace("{}Expected results generated", LoggerUtils.tab);
     }
 
     @Override

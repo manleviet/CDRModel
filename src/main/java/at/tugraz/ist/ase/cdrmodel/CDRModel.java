@@ -73,15 +73,14 @@ public abstract class CDRModel {
      * Call this method to load the constraints for the model.
      * Override this method to add all variables and constraints.
      */
-    public abstract void initialize();
+    public abstract void initialize() throws Exception;
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("CDRModel{");
-        sb.append('\n').append(" Name=").append(this.name);
-        sb.append('\n').append(',').append(correctConstraints.size()).append(" correctConstraints=").append(correctConstraints);
-        sb.append('\n').append(',').append(possiblyFaultyConstraints.size()).append(" possiblyFaultyConstraints=").append(possiblyFaultyConstraints);
-        sb.append('}');
-        return sb.toString();
+        String sb = "CDRModel{" + '\n' + " Name=" + this.name +
+                '\n' + ',' + correctConstraints.size() + " correctConstraints=" + correctConstraints +
+                '\n' + ',' + possiblyFaultyConstraints.size() + " possiblyFaultyConstraints=" + possiblyFaultyConstraints +
+                '}';
+        return sb;
     }
 }
