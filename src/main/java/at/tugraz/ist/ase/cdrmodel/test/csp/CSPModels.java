@@ -20,6 +20,8 @@ import org.chocosolver.solver.variables.IntVar;
 import java.io.IOException;
 import java.io.InputStream;
 
+import static at.tugraz.ist.ase.csp2choco.CSP2ChocoTranslator.loadConstraints;
+
 @UtilityClass
 @Slf4j
 public class CSPModels {
@@ -164,11 +166,5 @@ public class CSPModels {
         log.debug("{}<<< The model from csp6.mzn created", LoggerUtils.tab);
 
         return model;
-    }
-
-    public void loadConstraints(InputStream inputFile, Model model) throws IOException {
-        CSP2ChocoTranslator translator = new CSP2ChocoTranslator(model);
-
-        translator.translate(inputFile); // translate the input file into a Model with constraints
     }
 }
