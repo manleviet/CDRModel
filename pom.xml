@@ -6,7 +6,7 @@
 
     <groupId>at.tugraz.ist.ase</groupId>
     <artifactId>cdrmodel</artifactId>
-    <version>1.0.3-test</version>
+    <version>1.0.4-test</version>
     <packaging>jar</packaging>
 
     <properties>
