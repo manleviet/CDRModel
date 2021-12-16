@@ -47,7 +47,7 @@ public class TestModel1 extends CDRModel implements IChocoModel, ITestModel {
             C.add(c.toString());
         }
         Collections.reverse(C);
-        this.setPossiblyFaultyConstraints(C);
+        this.setPossiblyFaultyChocoConstraints(C);
 
         identifyExpectedResults();
 
@@ -56,7 +56,7 @@ public class TestModel1 extends CDRModel implements IChocoModel, ITestModel {
     }
 
     private void identifyExpectedResults() {
-        Set<String> C = this.getPossiblyFaultyConstraints();
+        Set<String> C = this.getPossiblyFaultyChocoConstraints();
 
         // Expected diagnoses
         Set<String> diag1 = new LinkedHashSet<>();
