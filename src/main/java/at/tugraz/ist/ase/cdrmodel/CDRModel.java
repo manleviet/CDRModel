@@ -111,18 +111,11 @@ public abstract class CDRModel {
 
     @Override
     public String toString() {
-        String sb;
-        if (correctConstraints.size() > 0) {
-            sb = "CDRModel{" + " Name=" + this.name +
-                    ", correctConstraints=" + correctConstraints +
-                    ", possiblyFaultyConstraints=" + possiblyFaultyConstraints +
-                    '}';
-        } else {
-            sb = "CDRModel{" + " Name=" + this.name +
-                    ", correctChocoConstraints=" + correctChocoConstraints +
-                    ", possiblyFaultyChocoConstraints=" + possiblyFaultyChocoConstraints +
-                    '}';
-        }
-        return sb;
+        return "CDRModel{" + " Name=" + this.name +
+                ", correctConstraints=" + correctConstraints +
+                ", possiblyFaultyConstraints=" + possiblyFaultyConstraints +
+                ", correctChocoConstraints=" + correctChocoConstraints +
+                ", possiblyFaultyChocoConstraints=" + possiblyFaultyChocoConstraints +
+                '}';
     }
 }
