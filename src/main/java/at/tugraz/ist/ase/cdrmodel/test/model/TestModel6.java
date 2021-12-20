@@ -13,11 +13,11 @@ import at.tugraz.ist.ase.cdrmodel.IChocoModel;
 import at.tugraz.ist.ase.cdrmodel.test.ITestModel;
 import at.tugraz.ist.ase.cdrmodel.test.csp.CSPModels;
 import at.tugraz.ist.ase.common.LoggerUtils;
+import at.tugraz.ist.ase.knowledgebases.core.Constraint;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IteratorUtils;
 import org.chocosolver.solver.Model;
-import org.chocosolver.solver.constraints.Constraint;
 
 import java.util.*;
 
@@ -26,52 +26,58 @@ public class TestModel6 extends CDRModel implements IChocoModel, ITestModel {
     @Getter
     private Model model;
 
-    private List<Set<String>> allDiagnoses = null;
-    private List<Set<String>> allConflicts = null;
+    private List<Set<Constraint>> allDiagnoses = null;
+    private List<Set<Constraint>> allConflicts = null;
 
-    public TestModel6(String name) {
-        super(name);
+    public TestModel6() {
+        super("Test 6");
     }
 
     @Override
     public void initialize() throws Exception {
-        log.debug("{}Initializing model {} >>>", LoggerUtils.tab, getName());
+        log.debug("{}Initializing CDRModel for {} >>>", LoggerUtils.tab, getName());
         LoggerUtils.indent();
 
         model = CSPModels.createModel6();
 
         // sets possibly faulty constraints to super class
-        List<String> C = new ArrayList<>();
-        for (Constraint c: model.getCstrs()) {
-            C.add(c.toString());
+        List<Constraint> C = new ArrayList<>();
+        for (org.chocosolver.solver.constraints.Constraint c: model.getCstrs()) {
+            Constraint constraint = new Constraint(c.toString());
+            constraint.addChocoConstraint(c);
+
+            C.add(constraint);
         }
         Collections.reverse(C);
-        this.setPossiblyFaultyChocoConstraints(C);
+        this.setPossiblyFaultyConstraints(C);
+        log.trace("{}Added constraints to the possibly faulty constraints [C={}]", LoggerUtils.tab, C);
 
         identifyExpectedResults();
 
+        model.unpost(model.getCstrs());
+
         LoggerUtils.outdent();
-        log.debug("{}<<< Model {} initialized", LoggerUtils.tab, getName());
+        log.debug("{}<<< Initialized CDRModel for {}", LoggerUtils.tab, getName());
     }
 
     private void identifyExpectedResults() {
-        Set<String> C = this.getPossiblyFaultyChocoConstraints();
+        Set<Constraint> C = this.getPossiblyFaultyConstraints();
 
         // Expected results
-        Set<String> diag1 = new LinkedHashSet<>();
+        Set<Constraint> diag1 = new LinkedHashSet<>();
         diag1.add(IteratorUtils.get(C.iterator(), 4));
         diag1.add(IteratorUtils.get(C.iterator(), 5));
 
-        Set<String> diag2 = new LinkedHashSet<>();
+        Set<Constraint> diag2 = new LinkedHashSet<>();
         diag2.add(IteratorUtils.get(C.iterator(), 1));
         diag2.add(IteratorUtils.get(C.iterator(), 5));
 
-        Set<String> diag3 = new LinkedHashSet<>();
+        Set<Constraint> diag3 = new LinkedHashSet<>();
         diag3.add(IteratorUtils.get(C.iterator(), 3));
         diag3.add(IteratorUtils.get(C.iterator(), 4));
         diag3.add(IteratorUtils.get(C.iterator(), 6));
 
-        Set<String> diag4 = new LinkedHashSet<>();
+        Set<Constraint> diag4 = new LinkedHashSet<>();
         diag4.add(IteratorUtils.get(C.iterator(), 1));
         diag4.add(IteratorUtils.get(C.iterator(), 3));
         diag4.add(IteratorUtils.get(C.iterator(), 6));
@@ -82,26 +88,26 @@ public class TestModel6 extends CDRModel implements IChocoModel, ITestModel {
         allDiagnoses.add(diag3);
         allDiagnoses.add(diag4);
 
-        log.trace("{}Expected results generated", LoggerUtils.tab);
+        log.trace("{}Generated expected results", LoggerUtils.tab);
     }
 
     @Override
-    public Set<String> getExpectedFirstDiagnosis() {
+    public Set<Constraint> getExpectedFirstDiagnosis() {
         return allDiagnoses.get(0);
     }
 
     @Override
-    public List<Set<String>> getExpectedAllDiagnoses() {
+    public List<Set<Constraint>> getExpectedAllDiagnoses() {
         return allDiagnoses;
     }
 
     @Override
-    public Set<String> getExpectedFirstConflict() {
+    public Set<Constraint> getExpectedFirstConflict() {
         return null;
     }
 
     @Override
-    public List<Set<String>> getExpectedAllConflicts() {
+    public List<Set<Constraint>> getExpectedAllConflicts() {
         return null;
     }
 }

@@ -113,14 +113,14 @@ public abstract class CDRModel {
     public String toString() {
         String sb;
         if (correctConstraints.size() > 0) {
-            sb = "CDRModel{" + '\n' + " Name=" + this.name +
-                    '\n' + ',' + correctConstraints.size() + " correctConstraints=" + correctConstraints +
-                    '\n' + ',' + possiblyFaultyConstraints.size() + " possiblyFaultyConstraints=" + possiblyFaultyConstraints +
+            sb = "CDRModel{" + " Name=" + this.name +
+                    ", correctConstraints=" + correctConstraints +
+                    ", possiblyFaultyConstraints=" + possiblyFaultyConstraints +
                     '}';
         } else {
-            sb = "CDRModel{" + '\n' + " Name=" + this.name +
-                    '\n' + ',' + correctChocoConstraints.size() + " correctChocoConstraints=" + correctChocoConstraints +
-                    '\n' + ',' + possiblyFaultyChocoConstraints.size() + " possiblyFaultyChocoConstraints=" + possiblyFaultyChocoConstraints +
+            sb = "CDRModel{" + " Name=" + this.name +
+                    ", correctChocoConstraints=" + correctChocoConstraints +
+                    ", possiblyFaultyChocoConstraints=" + possiblyFaultyChocoConstraints +
                     '}';
         }
         return sb;

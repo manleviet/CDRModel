@@ -8,13 +8,15 @@
 
 package at.tugraz.ist.ase.cdrmodel.test;
 
+import at.tugraz.ist.ase.knowledgebases.core.Constraint;
+
 import java.util.List;
 import java.util.Set;
 
 public interface ITestModel {
-    Set<String> getExpectedFirstDiagnosis();
-    List<Set<String>> getExpectedAllDiagnoses();
+    Set<Constraint> getExpectedFirstDiagnosis();
+    List<Set<Constraint>> getExpectedAllDiagnoses();
 
-    Set<String> getExpectedFirstConflict();
-    List<Set<String>> getExpectedAllConflicts();
+    Set<Constraint> getExpectedFirstConflict();
+    List<Set<Constraint>> getExpectedAllConflicts();
 }
