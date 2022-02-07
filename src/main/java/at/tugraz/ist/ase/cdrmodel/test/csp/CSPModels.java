@@ -1,7 +1,7 @@
 /*
  * CDRModel - a Maven package for Conflict Detection and Resolution Models
  *
- * Copyright (c) 2021
+ * Copyright (c) 2021-2022
  *
  * @author: Viet-Man Le (vietman.le@ist.tugraz.at)
  */
@@ -24,7 +24,7 @@ import static at.tugraz.ist.ase.csp2choco.CSP2ChocoTranslator.loadConstraints;
 @Slf4j
 public class CSPModels {
     public Model createModel1() throws IOException {
-        log.debug("{}Creating model from csp1.mzn >>>", LoggerUtils.tab);
+        log.trace("{}Creating model from csp1.mzn >>>", LoggerUtils.tab);
         LoggerUtils.indent();
 
         // create a model
@@ -48,7 +48,7 @@ public class CSPModels {
     }
 
     public Model createModel2() throws IOException {
-        log.debug("{}Creating model from csp2.mzn >>>", LoggerUtils.tab);
+        log.trace("{}Creating model from csp2.mzn >>>", LoggerUtils.tab);
         LoggerUtils.indent();
 
         // create a model
@@ -73,7 +73,7 @@ public class CSPModels {
     }
 
     public Model createModel3() throws IOException {
-        log.debug("{}Creating model from csp3.mzn >>>", LoggerUtils.tab);
+        log.trace("{}Creating model from csp3.mzn >>>", LoggerUtils.tab);
         LoggerUtils.indent();
 
         // create a model
@@ -98,7 +98,7 @@ public class CSPModels {
     }
 
     public Model createModel4() throws IOException {
-        log.debug("{}Creating model from csp4.mzn >>>", LoggerUtils.tab);
+        log.trace("{}Creating model from csp4.mzn >>>", LoggerUtils.tab);
         LoggerUtils.indent();
 
         // create a model
@@ -123,7 +123,7 @@ public class CSPModels {
     }
 
     public Model createModel5() throws IOException {
-        log.debug("{}Creating model from csp5.mzn >>>", LoggerUtils.tab);
+        log.trace("{}Creating model from csp5.mzn >>>", LoggerUtils.tab);
         LoggerUtils.indent();
 
         // create a model
@@ -148,7 +148,7 @@ public class CSPModels {
     }
 
     public Model createModel6() throws IOException {
-        log.debug("{}Creating model from csp6.mzn >>>", LoggerUtils.tab);
+        log.trace("{}Creating model from csp6.mzn >>>", LoggerUtils.tab);
         LoggerUtils.indent();
 
         // create a model

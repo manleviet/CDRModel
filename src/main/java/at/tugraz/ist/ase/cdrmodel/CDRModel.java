@@ -1,7 +1,7 @@
 /*
  * CDRModel - a Maven package for Conflict Detection and Resolution Models
  *
- * Copyright (c) 2021
+ * Copyright (c) 2021-2022
  *
  * @author: Viet-Man Le (vietman.le@ist.tugraz.at)
  */
@@ -20,8 +20,6 @@ import java.util.Set;
  * Contains the knowledge base for constraint problems.
  *
  * Supports two types of constraints: Choco constraints (String) and representative constraints ({@link Constraint}).
- *
- * @author Viet-Man Le (vietman.le@ist.tugraz.at)
  */
 @Getter
 public abstract class CDRModel {

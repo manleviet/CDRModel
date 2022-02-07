@@ -1,7 +1,7 @@
 /*
  * CDRModel - a Maven package for Conflict Detection and Resolution Models
  *
- * Copyright (c) 2021
+ * Copyright (c) 2021-2022
  *
  * @author: Viet-Man Le (vietman.le@ist.tugraz.at)
  */
@@ -36,7 +36,7 @@ public class TestModel1 extends CDRModel implements IChocoModel, ITestModel {
 
     @Override
     public void initialize() throws Exception {
-        log.debug("{}Initializing CDRModel for {} >>>", LoggerUtils.tab, getName());
+        log.trace("{}Initializing CDRModel for {} >>>", LoggerUtils.tab, getName());
         LoggerUtils.indent();
 
         model = CSPModels.createModel1();
