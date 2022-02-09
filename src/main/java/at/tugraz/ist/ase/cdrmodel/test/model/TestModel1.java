@@ -66,20 +66,20 @@ public class TestModel1 extends CDRModel implements IChocoModel, ITestModel {
 
         // Expected diagnoses
         Set<Constraint> diag1 = new LinkedHashSet<>();
-        diag1.add(IteratorUtils.get(C.iterator(), 2));
-        diag1.add(IteratorUtils.get(C.iterator(), 3));
+        diag1.add(IteratorUtils.get(C.iterator(), 2)); // ARITHM ([y >= x + 1])
+        diag1.add(IteratorUtils.get(C.iterator(), 3)); // ARITHM ([x >= 2])
 
         Set<Constraint> diag2 = new LinkedHashSet<>();
-        diag2.add(IteratorUtils.get(C.iterator(), 0));
-        diag2.add(IteratorUtils.get(C.iterator(), 3));
+        diag2.add(IteratorUtils.get(C.iterator(), 0)); // ARITHM ([y = -10])
+        diag2.add(IteratorUtils.get(C.iterator(), 3)); // ARITHM ([x >= 2])
 
         Set<Constraint> diag3 = new LinkedHashSet<>();
-        diag3.add(IteratorUtils.get(C.iterator(), 1));
-        diag3.add(IteratorUtils.get(C.iterator(), 2));
+        diag3.add(IteratorUtils.get(C.iterator(), 1)); // ARITHM ([x <= 0])
+        diag3.add(IteratorUtils.get(C.iterator(), 2)); // ARITHM ([y >= x + 1])
 
         Set<Constraint> diag4 = new LinkedHashSet<>();
-        diag4.add(IteratorUtils.get(C.iterator(), 0));
-        diag4.add(IteratorUtils.get(C.iterator(), 1));
+        diag4.add(IteratorUtils.get(C.iterator(), 0)); // ARITHM ([y = -10])
+        diag4.add(IteratorUtils.get(C.iterator(), 1)); // ARITHM ([x <= 0])
 
         allDiagnoses = new ArrayList<>();
         allDiagnoses.add(diag1);
@@ -89,12 +89,12 @@ public class TestModel1 extends CDRModel implements IChocoModel, ITestModel {
 
         // Expected conflicts
         Set<Constraint> cs1 = new LinkedHashSet<>();
-        cs1.add(IteratorUtils.get(C.iterator(), 1));
-        cs1.add(IteratorUtils.get(C.iterator(), 3));
+        cs1.add(IteratorUtils.get(C.iterator(), 1)); // ARITHM ([x <= 0])
+        cs1.add(IteratorUtils.get(C.iterator(), 3)); // ARITHM ([x >= 2])
 
         Set<Constraint> cs2 = new LinkedHashSet<>();
-        cs2.add(IteratorUtils.get(C.iterator(), 0));
-        cs2.add(IteratorUtils.get(C.iterator(), 2));
+        cs2.add(IteratorUtils.get(C.iterator(), 0)); // ARITHM ([y = -10])
+        cs2.add(IteratorUtils.get(C.iterator(), 2)); // ARITHM ([y >= x + 1])
 
         allConflicts = new ArrayList<>();
         allConflicts.add(cs1);

@@ -94,12 +94,12 @@ public class TestModel3 extends CDRModel implements IChocoModel, ITestModel {
         cs1.add(IteratorUtils.get(C.iterator(), 6));
 
         Set<Constraint> cs2 = new LinkedHashSet<>();
-        cs2.add(IteratorUtils.get(C.iterator(), 0));
-        cs2.add(IteratorUtils.get(C.iterator(), 2));
+        cs2.add(IteratorUtils.get(C.iterator(), 3));
+        cs2.add(IteratorUtils.get(C.iterator(), 5));
 
         Set<Constraint> cs3 = new LinkedHashSet<>();
-        cs3.add(IteratorUtils.get(C.iterator(), 3));
-        cs3.add(IteratorUtils.get(C.iterator(), 5));
+        cs3.add(IteratorUtils.get(C.iterator(), 0));
+        cs3.add(IteratorUtils.get(C.iterator(), 2));
 
         allConflicts = new ArrayList<>();
         allConflicts.add(cs1);
