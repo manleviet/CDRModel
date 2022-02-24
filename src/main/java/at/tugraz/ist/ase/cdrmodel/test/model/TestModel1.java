@@ -1,7 +1,7 @@
 /*
  * CDRModel - a Maven package for Conflict Detection and Resolution Models
  *
- * Copyright (c) 2021
+ * Copyright (c) 2021-2022
  *
  * @author: Viet-Man Le (vietman.le@ist.tugraz.at)
  */
@@ -11,61 +11,75 @@ package at.tugraz.ist.ase.cdrmodel.test.model;
 import at.tugraz.ist.ase.cdrmodel.CDRModel;
 import at.tugraz.ist.ase.cdrmodel.IChocoModel;
 import at.tugraz.ist.ase.cdrmodel.test.ITestModel;
+import at.tugraz.ist.ase.cdrmodel.test.csp.CSPModels;
+import at.tugraz.ist.ase.common.LoggerUtils;
+import at.tugraz.ist.ase.knowledgebases.core.Constraint;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.IteratorUtils;
 import org.chocosolver.solver.Model;
-import org.chocosolver.solver.constraints.Constraint;
 
 import java.util.*;
 
-import static at.tugraz.ist.ase.cdrmodel.test.csp.CSPModels.createModel1;
-
+@Slf4j
 public class TestModel1 extends CDRModel implements IChocoModel, ITestModel {
 
     @Getter
     private Model model;
 
-    private List<Set<String>> allDiagnoses = null;
-    private List<Set<String>> allConflicts = null;
+    private List<Set<Constraint>> allDiagnoses = null;
+    private List<Set<Constraint>> allConflicts = null;
 
-    public TestModel1(String name) {
-        super(name);
+    public TestModel1() {
+        super("Test 1");
     }
 
     @Override
-    public void initialize() {
-        model = createModel1();
+    public void initialize() throws Exception {
+        log.trace("{}Initializing CDRModel for {} >>>", LoggerUtils.tab, getName());
+        LoggerUtils.indent();
+
+        model = CSPModels.createModel1();
 
         // sets possibly faulty constraints to super class
-        List<String> C = new ArrayList<>();
-        for (Constraint c: model.getCstrs()) {
-            C.add(c.toString());
+        List<Constraint> C = new ArrayList<>();
+        for (org.chocosolver.solver.constraints.Constraint c: model.getCstrs()) {
+            Constraint constraint = new Constraint(c.toString());
+            constraint.addChocoConstraint(c);
+
+            C.add(constraint);
         }
         Collections.reverse(C);
         this.setPossiblyFaultyConstraints(C);
+        log.trace("{}Added constraints to the possibly faulty constraints [C={}]", LoggerUtils.tab, C);
 
         identifyExpectedResults();
+
+        model.unpost(model.getCstrs());
+
+        LoggerUtils.outdent();
+        log.debug("{}<<< Initialized CDRModel for {}", LoggerUtils.tab, getName());
     }
 
-    public void identifyExpectedResults() {
-        Set<String> C = this.getPossiblyFaultyConstraints();
+    private void identifyExpectedResults() {
+        Set<Constraint> C = this.getPossiblyFaultyConstraints();
 
         // Expected diagnoses
-        Set<String> diag1 = new LinkedHashSet<>();
-        diag1.add(IteratorUtils.get(C.iterator(), 2));
-        diag1.add(IteratorUtils.get(C.iterator(), 3));
+        Set<Constraint> diag1 = new LinkedHashSet<>();
+        diag1.add(IteratorUtils.get(C.iterator(), 2)); // ARITHM ([y >= x + 1])
+        diag1.add(IteratorUtils.get(C.iterator(), 3)); // ARITHM ([x >= 2])
 
-        Set<String> diag2 = new LinkedHashSet<>();
-        diag2.add(IteratorUtils.get(C.iterator(), 0));
-        diag2.add(IteratorUtils.get(C.iterator(), 3));
+        Set<Constraint> diag2 = new LinkedHashSet<>();
+        diag2.add(IteratorUtils.get(C.iterator(), 0)); // ARITHM ([y = -10])
+        diag2.add(IteratorUtils.get(C.iterator(), 3)); // ARITHM ([x >= 2])
 
-        Set<String> diag3 = new LinkedHashSet<>();
-        diag3.add(IteratorUtils.get(C.iterator(), 1));
-        diag3.add(IteratorUtils.get(C.iterator(), 2));
+        Set<Constraint> diag3 = new LinkedHashSet<>();
+        diag3.add(IteratorUtils.get(C.iterator(), 1)); // ARITHM ([x <= 0])
+        diag3.add(IteratorUtils.get(C.iterator(), 2)); // ARITHM ([y >= x + 1])
 
-        Set<String> diag4 = new LinkedHashSet<>();
-        diag4.add(IteratorUtils.get(C.iterator(), 0));
-        diag4.add(IteratorUtils.get(C.iterator(), 1));
+        Set<Constraint> diag4 = new LinkedHashSet<>();
+        diag4.add(IteratorUtils.get(C.iterator(), 0)); // ARITHM ([y = -10])
+        diag4.add(IteratorUtils.get(C.iterator(), 1)); // ARITHM ([x <= 0])
 
         allDiagnoses = new ArrayList<>();
         allDiagnoses.add(diag1);
@@ -74,40 +88,42 @@ public class TestModel1 extends CDRModel implements IChocoModel, ITestModel {
         allDiagnoses.add(diag4);
 
         // Expected conflicts
-        Set<String> cs1 = new LinkedHashSet<>();
-        cs1.add(IteratorUtils.get(C.iterator(), 1));
-        cs1.add(IteratorUtils.get(C.iterator(), 3));
+        Set<Constraint> cs1 = new LinkedHashSet<>();
+        cs1.add(IteratorUtils.get(C.iterator(), 1)); // ARITHM ([x <= 0])
+        cs1.add(IteratorUtils.get(C.iterator(), 3)); // ARITHM ([x >= 2])
 
-        Set<String> cs2 = new LinkedHashSet<>();
-        cs2.add(IteratorUtils.get(C.iterator(), 0));
-        cs2.add(IteratorUtils.get(C.iterator(), 2));
+        Set<Constraint> cs2 = new LinkedHashSet<>();
+        cs2.add(IteratorUtils.get(C.iterator(), 0)); // ARITHM ([y = -10])
+        cs2.add(IteratorUtils.get(C.iterator(), 2)); // ARITHM ([y >= x + 1])
 
         allConflicts = new ArrayList<>();
         allConflicts.add(cs1);
         allConflicts.add(cs2);
+
+        log.trace("{}Generated expected results", LoggerUtils.tab);
     }
 
     @Override
-    public Set<String> getExpectedFirstDiagnosis() {
+    public Set<Constraint> getExpectedFirstDiagnosis() {
         if (allDiagnoses != null)
             return allDiagnoses.get(0);
         return null;
     }
 
     @Override
-    public List<Set<String>> getExpectedAllDiagnoses() {
+    public List<Set<Constraint>> getExpectedAllDiagnoses() {
         return allDiagnoses;
     }
 
     @Override
-    public Set<String> getExpectedFirstConflict() {
+    public Set<Constraint> getExpectedFirstConflict() {
         if (allConflicts != null)
             return allConflicts.get(0);
         return null;
     }
 
     @Override
-    public List<Set<String>> getExpectedAllConflicts() {
+    public List<Set<Constraint>> getExpectedAllConflicts() {
         return allConflicts;
     }
 }
