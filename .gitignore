@@ -12,3 +12,4 @@ buildNumber.properties
 /.idea/
 /CDRModel.iml
 /logs.log
+.DS_Store
