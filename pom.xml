@@ -6,7 +6,7 @@
 
     <groupId>at.tugraz.ist.ase</groupId>
     <artifactId>cdrmodel</artifactId>
-    <version>1.2.4</version>
+    <version>1.2.5</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>at.tugraz.ist.ase</groupId>
             <artifactId>choco-kb</artifactId>
-            <version>1.2.4</version>
+            <version>1.2.5</version>
         </dependency>
 
         <dependency>
