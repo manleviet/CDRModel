@@ -8,6 +8,7 @@
 
 package at.tugraz.ist.ase.cdrmodel;
 
+import at.tugraz.ist.ase.eval.test.ITestCase;
 import at.tugraz.ist.ase.eval.test.TestCase;
 
 import java.util.Set;
@@ -17,12 +18,12 @@ public interface IDebuggingModel {
      * Gets the set of test cases.
      * @return the set of test cases.
      */
-    Set<TestCase> getTestcases();
+    Set<ITestCase> getTestcases();
 
     /**
-     * Gets a corresponding {@link TestCase} object of a textual testcase.
+     * Gets a corresponding {@link ITestCase} object of a textual testcase.
      * @param testcase a textual testcase.
-     * @return a corresponding {@link TestCase} object.
+     * @return a corresponding {@link ITestCase} object.
      */
-    TestCase getTestCase(String testcase);
+    ITestCase getTestCase(String testcase);
 }
