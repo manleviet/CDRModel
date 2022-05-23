@@ -1,4 +1,7 @@
 # CDRModel
+
+*Migrated to [https://github.com/manleviet/CA-CDR-V2](https://github.com/manleviet/CA-CDR-V2)*
+
 Models for Conflict Detection and Resolution
 
 ## How to use
